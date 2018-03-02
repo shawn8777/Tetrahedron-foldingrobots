@@ -52,6 +52,7 @@ using System;
     FixedJoint[] FJt = new FixedJoint[20];
     HingeJoint[] HJt = new HingeJoint[20];
     ConfigurableJoint[] CJt = new ConfigurableJoint[20];
+    public AudioSource audioS;
 
     public int limitspring;
     public int limitdamper;
@@ -233,7 +234,7 @@ using System;
             HJt[i + 3].useSpring = true;
             JointSpring spr1 = HJt[i+3].GetComponent<HingeJoint>().spring;
             spr1.spring = springOOO;
-            spr1.damper = damperOOO;S
+            spr1.damper = damperOOO;
             spr1.targetPosition = targetposition;
             HJt[i].GetComponent<HingeJoint>().spring = spr1;
             //set E
@@ -424,6 +425,10 @@ using System;
             T2[i].GetComponent<Rigidbody>().AddTorque(T2[i].transform.right* 150, ForceMode.Force);
             //HJt[i].useSpring 
             T7[i].GetComponent<Rigidbody>().AddTorque(T7[i].transform.right * 500, ForceMode.Force);
+            if (audioS.isPlaying == false)
+            {
+                audioS.Play();
+            }
         }
             Debug.Log("stand up");
             Debug.Log(Time.deltaTime);
@@ -432,10 +437,15 @@ using System;
 
         void Standup1()
         {
-            for (int i = 0; i < 3; i++)
+        if (audioS.isPlaying == false)
+        {
+            audioS.Play();
+        }
+        for (int i = 0; i < 3; i++)
             {
             T4[i].GetComponent<Rigidbody>().AddTorque(T4[i].transform.up * 150, ForceMode.VelocityChange);
-            }
+            T7[i].GetComponent<Rigidbody>().AddTorque(T7[i].transform.up * 200, ForceMode.Force);
+        }
             Debug.Log("stand up1");
             Debug.Log(Time.deltaTime);
         }
@@ -444,10 +454,10 @@ using System;
         {
             for (int i = 0; i < 3; i++)
             {
-                
-                T1[i].transform.localRotation = T2[i].transform.localRotation = T4[i].transform.localRotation = Quaternion.Euler(0, i * 120, 0);
-                T1[0].transform.position = T2[i].transform.position = T4[i].transform.position = new Vector3(0, 0, 0);
-            }
+             T7[i].transform.localRotation = T4[i].transform.localRotation = Quaternion.Euler(0, i * 120, 0);
+            //T1[i].transform.localRotation = T2[i].transform.localRotation = T4[i].transform.localRotation = Quaternion.Euler(0, i * 120, 0);
+            //T1[0].transform.position = T2[i].transform.position = T4[i].transform.position = new Vector3(0, 0, 0);
+        }
         }
 
         void Restart()

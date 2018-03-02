@@ -33,7 +33,8 @@ public class RoboticArm : MonoBehaviour {
 	{
 		// between 0 and 360 degrees
 		part0.localRotation=Quaternion.Euler(-90,val*360,0);
-		if (audioS.isPlaying == false) {
+		if (audioS.isPlaying == false)
+        {
 			audioS.Play ();
 		}
 
