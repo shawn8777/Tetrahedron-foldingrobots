@@ -20,6 +20,10 @@ using System;
     [SerializeField] public GameObject T5Prefab;
     [SerializeField] public GameObject T6Prefab;
     [SerializeField] public GameObject T7Prefab;
+    [SerializeField] public GameObject T8Prefab;
+    [SerializeField] public GameObject T88Prefab;
+    [SerializeField] public GameObject T9Prefab;
+    [SerializeField] public GameObject T99Prefab;
 
     //[SerializeField] public GameObject C1refab;
     //[SerializeField] public GameObject D1Prefab;
@@ -33,6 +37,9 @@ using System;
     public Mesh _meshe;
     public Mesh _meshf;
     public Mesh _meshg;
+    public Mesh _meshh;
+    public Mesh _meshi;
+    public Mesh _meshj;
 
 
     private Vector3[] OPoint = new Vector3[1];
@@ -45,6 +52,10 @@ using System;
     private Transform[] T5 = new Transform[3];
     private Transform[] T6 = new Transform[3];
     private Transform[] T7 = new Transform[3];
+    private Transform[] T8 = new Transform[3];
+    private Transform[] T88 = new Transform[3];
+    private Transform[] T9 = new Transform[3];
+    private Transform[] T99 = new Transform[3];
     //private Transform[] C1 = new Transform[3];
     //private Transform[] D1 = new Transform[3];
 
@@ -106,7 +117,8 @@ using System;
             _O1.AddComponent<MeshCollider>().convex = true;
             _O1.GetComponent<MeshCollider>().sharedMesh = _mesho;
             _O1.AddComponent<MeshFilter>().sharedMesh = _mesho;
-            
+
+       
             for (int i = 0; i < 3; i++)
             {
                 //set A
@@ -236,7 +248,7 @@ using System;
             spr1.spring = springOOO;
             spr1.damper = damperOOO;
             spr1.targetPosition = targetposition;
-            HJt[i].GetComponent<HingeJoint>().spring = spr1;
+            HJt[i+3].GetComponent<HingeJoint>().spring = spr1;
             //set E
             GameObject _E = Instantiate(T7Prefab, transform);
             _E.transform.position = OPoint[0];
@@ -248,6 +260,18 @@ using System;
             _E.AddComponent<Rigidbody>();
             FJt[i + 12] = _E.AddComponent<FixedJoint>();
             FJt[i + 12].connectedBody = _D.GetComponent<Rigidbody>();
+            // set F
+            GameObject _F = Instantiate(T99Prefab, transform);
+            _F.transform.position = OPoint[0];
+            _F.transform.localRotation = Quaternion.Euler(0, i*120, 0);
+            T99[0] = _F.transform;
+            _F.AddComponent<Rigidbody>();
+            _F.GetComponent<Rigidbody>().useGravity = false;
+            _F.AddComponent<SphereCollider>().center = new Vector3(10.18f,7.3f,-12.5f);
+            _F.GetComponent<SphereCollider>().radius = 0.4f;
+            _F.GetComponent<SphereCollider>().isTrigger = true;
+            FJt[i+15] = _F.AddComponent<FixedJoint>();
+            FJt[i+15].connectedBody = _E.GetComponent<Rigidbody>();
 
             /*
                 //set B(VERTICAL)
@@ -355,6 +379,8 @@ using System;
             */
 
         }
+        
+
     }
     // Update is called once per frame
     private void Update()
@@ -372,7 +398,7 @@ using System;
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Standup1();
+            Rotate();
         }
 
         Updatabody();
@@ -430,12 +456,12 @@ using System;
                 audioS.Play();
             }
         }
-            Debug.Log("stand up");
+            Debug.Log("FOLDING");
             Debug.Log(Time.deltaTime);
 
         }
 
-        void Standup1()
+        void Rotate()
         {
         if (audioS.isPlaying == false)
         {
@@ -443,10 +469,10 @@ using System;
         }
         for (int i = 0; i < 3; i++)
             {
-            T4[i].GetComponent<Rigidbody>().AddTorque(T4[i].transform.up * 150, ForceMode.VelocityChange);
-            T7[i].GetComponent<Rigidbody>().AddTorque(T7[i].transform.up * 200, ForceMode.Force);
+            T4[i].GetComponent<Rigidbody>().AddTorque(T4[i].transform.up * 500, ForceMode.VelocityChange);
+            T7[i].GetComponent<Rigidbody>().AddTorque(T7[i].transform.up * 300, ForceMode.Force);
         }
-            Debug.Log("stand up1");
+            Debug.Log("ROTATING");
             Debug.Log(Time.deltaTime);
         }
 
