@@ -283,125 +283,6 @@ using System.Runtime.InteropServices;
             f.GetComponent<SphereCollider>().isTrigger = true;
            FJt[i+15] = f.AddComponent<FixedJoint>();
            FJt[i+15].connectedBody = e.GetComponent<Rigidbody>();
-           /*
-            CJt[i] = f.AddComponent<ConfigurableJoint>();
-            CJt[i].connectedBody = e.GetComponent<Rigidbody>();
-            CJt[i].anchor = new Vector3(10.18f, 7.3f, -12.5f);
-            CJt[i].axis = new Vector3(1, 0, 0);
-            CJt[i].secondaryAxis = new Vector3(0, 1, 0);
-            CJt[i].xMotion = ConfigurableJointMotion.Locked;
-            CJt[i].yMotion = ConfigurableJointMotion.Locked;
-            CJt[i].zMotion = ConfigurableJointMotion.Locked;
-            CJt[i].angularXMotion = ConfigurableJointMotion.Free;
-            CJt[i].angularYMotion = ConfigurableJointMotion.Free;
-            CJt[i].angularZMotion = ConfigurableJointMotion.Free;
-            */
-
-            /*
-                //set B(VERTICAL)
-                GameObject _B1 = Instantiate(T2Prefab, transform);
-                _B1.transform.position = OPoint[0];
-                _B1.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
-                _B1.AddComponent<MeshCollider>().convex = true;
-                _B1.GetComponent<MeshCollider>().sharedMesh = Meshb;
-                _B1.AddComponent<MeshFilter>().sharedMesh = Meshb;
-                T2[i] = _B1.transform;
-                _B1.AddComponent<Rigidbody>();
-                //FJ[i + 3] = _B.AddComponent<FixedJoint>();
-                //FJ[i + 3].connectedBody = _A.GetComponent<Rigidbody>();
-
-                HJt[i] = _B.AddComponent<HingeJoint>();
-                HJt[i].connectedBody = _A.GetComponent<Rigidbody>();
-                HJt[i].anchor = new Vector3(-2.55f, -0.7f, -0.15f);
-                HJt[i].axis = new Vector3(0, 0, 1);
-                HJt[i].autoConfigureConnectedAnchor = false;
-                HJt[i].connectedAnchor = new Vector3(-2.6f, 0, -0.12f);
-                HJt[i].enableCollision = true;
-                HJt[i].useSpring = true;
-                JointSpring spr0 = HJt[i].GetComponent<HingeJoint>().spring;
-                spr0.spring = 30;
-                spr0.damper = 30;
-                spr0.targetPosition = 0;
-                HJt[i].GetComponent<HingeJoint>().spring = spr0;
-
-            */
-
-            /*
-            //set C
-            GameObject _C = Instantiate(CPrefab, transform);
-            _C.transform.position = CenterPoint[0];
-            _C.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
-            _C.AddComponent<MeshCollider>().convex = true;
-            _C.GetComponent<MeshCollider>().sharedMesh = _mesh3;
-            _C.AddComponent<MeshFilter>().sharedMesh = _mesh3;
-            C[i] = _C.transform;
-            HJ[i + 3] = _C.AddComponent<HingeJoint>();
-            HJ[i + 3].connectedBody = _B.GetComponent<Rigidbody>();
-            _C.GetComponent<Rigidbody>().useGravity = false;
-            HJ[i + 3].anchor = new Vector3(-4.91f, -0.03f, -0.73f);
-            HJ[i + 3].axis = new Vector3(1, 0, 0);
-            HJ[i + 3].autoConfigureConnectedAnchor = false;
-            HJ[i + 3].connectedAnchor = new Vector3(-4.91f, -0.03f, -0.73f);
-            HJ[i + 3].enableCollision = true;
-            HJ[i + 3].useSpring = true;
-            JointSpring spr2 = HJ[i + 3].GetComponent<HingeJoint>().spring;
-            spr2.spring = springOO;
-            spr2.damper = damperOO;
-            spr2.targetPosition = targetpositionOO;
-            HJ[i + 3].GetComponent<HingeJoint>().spring = spr2;
-            HJ[i + 3].useMotor = true;
-            JointMotor jmr2 = HJ[i + 3].GetComponent<HingeJoint>().motor;
-            jmr2.targetVelocity = motorvelocityOO;
-            HJ[i + 3].GetComponent<HingeJoint>().motor = jmr2;
-            //FJ[3 + i] = _C.AddComponent<FixedJoint>();
-            //FJ[3 + i].connectedBody = _B.GetComponent<Rigidbody>();
-
-            //set D
-            GameObject _Leg = Instantiate(LegTestPrefab, transform);
-            _Leg.transform.position = CenterPoint[0];
-            _Leg.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
-            _Leg.AddComponent<Rigidbody>();
-            _Leg.AddComponent<MeshCollider>().convex = true;
-            _Leg.GetComponent<MeshCollider>().sharedMesh = _mesh4;
-            _Leg.AddComponent<MeshFilter>().sharedMesh = _mesh4;
-            LegTest[i] = _Leg.transform;
-            FJ[i + 6] = _Leg.AddComponent<FixedJoint>();
-            FJ[i + 6].connectedBody = _C.GetComponent<Rigidbody>();
-
-            /*
-            HJ[i + 3] = _D.AddComponent<HingeJoint>();
-            HJ[i + 3].connectedBody = _C.GetComponent<Rigidbody>();
-            HJ[i+3].anchor = new Vector3(-6.88f, 0, -0.72f);
-            HJ[i+3].axis = new Vector3(1, 0, 0);
-            HJ[i+3].autoConfigureConnectedAnchor = false;
-            HJ[i+3].connectedAnchor = new Vector3(-6.88f, 0, -0.75f);
-            HJ[i+3].enableCollision = true;
-            HJ[i+3].useSpring = true;
-            JointSpring spr2 = HJ[i + 3].GetComponent<HingeJoint>().spring;
-            spr2.spring = springOO;
-            spr2.damper = damperOO;
-            spr2.targetPosition = targetpositionOO;
-            HJ[i+3].GetComponent<HingeJoint>().spring = spr2;
-            HJ[i + 3].useMotor = true;
-            JointMotor jmr2 = HJ[i + 3].GetComponent<HingeJoint>().motor;
-            jmr2.targetVelocity = 50;
-            HJ[i + 3].GetComponent<HingeJoint>().motor = jmr2;
-            */
-
-            /*
-            //SET E
-            GameObject _E = Instantiate(EPrefab, transform);
-            _E.transform.position = CenterPoint[0];
-            _E.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
-            _E.AddComponent<Rigidbody>();
-            E[i] = _E.transform;
-            FJ[i + 3] = _E.AddComponent<FixedJoint>();
-            FJ[i + 3].connectedBody = _Leg.GetComponent<Rigidbody>();
-            _E.AddComponent<MeshCollider>().convex = false;
-            _E.GetComponent<MeshCollider>().sharedMesh = _mesh5;
-            _E.AddComponent<MeshFilter>().sharedMesh = _mesh5;
-            */
-
         }
         
 
@@ -474,10 +355,8 @@ using System.Runtime.InteropServices;
              //T3[i].localRotation = Quaternion.LookRotation(fwd, BO);
 
             
-
-            //set E 
-            //var EO = T3[i].transform.position - new Vector3(0, 0, 0);
-            //T3[i].localPosition = T4[i].transform.position;*/
+    */
+          
         }
 
     }
@@ -494,7 +373,6 @@ using System.Runtime.InteropServices;
             //O1[0].transform.position = new Vector3(0, i * 10.0f, 0);
             //CenterPoint[0] = new Vector3(0, 5f * i, 0);
            // T1[i].transform.localRotation = T2[i].transform.localRotation = T4[i].transform.localRotation = Quaternion.Euler(10*Time.deltaTime, i * 120, 0);
-            //T4[i].GetComponent<Rigidbody>().AddTorque(T2[i].transform.forward*100000,ForceMode.Force);
             T2[i].GetComponent<Rigidbody>().AddTorque(T2[i].transform.right* 150, ForceMode.Force);
             //HJt[i].useSpring 
             T7[i].GetComponent<Rigidbody>().AddTorque(T7[i].transform.right * 500, ForceMode.Force);
