@@ -61,7 +61,7 @@ using System.Runtime.InteropServices;
     //private Transform[] D1 = new Transform[3];
 
 
-    FixedJoint[] FJt = new FixedJoint[20];
+    FixedJoint[] FJt = new FixedJoint[21];
     HingeJoint[] HJt = new HingeJoint[20];
     ConfigurableJoint[] CJt = new ConfigurableJoint[20];
     public AudioSource AudioS;
@@ -328,10 +328,24 @@ using System.Runtime.InteropServices;
         {
             Stable();
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Topballconnect();
+        }
 
         Updatabody();
 
     }
+
+        private void Topballconnect()
+        {
+        for (int i = 0; i < 3; i++)
+        {
+            FJt[i + 18] = T99[i].gameObject.AddComponent<FixedJoint>();
+            FJt[i + 18].connectedBody = T99[i + 1].gameObject.GetComponent<Rigidbody>();
+        }
+
+        }
     private void Updatabody()
     {
         //T2[0].localRotation = T2[1].localRotation = T2[2].localRotation;
