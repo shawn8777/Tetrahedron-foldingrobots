@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetrahedron-foldingrobots", "Tetrahedron-foldingrobots.csproj", "{2A83CC3D-B60B-A2B0-C37D-42FB60B86CE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetrahedron-foldingrobots.Editor", "Tetrahedron-foldingrobots.Editor.csproj", "{815F39C0-9CC9-F610-9578-11EE98D75774}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{2A83CC3D-B60B-A2B0-C37D-42FB60B86CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A83CC3D-B60B-A2B0-C37D-42FB60B86CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A83CC3D-B60B-A2B0-C37D-42FB60B86CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{815F39C0-9CC9-F610-9578-11EE98D75774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815F39C0-9CC9-F610-9578-11EE98D75774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815F39C0-9CC9-F610-9578-11EE98D75774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815F39C0-9CC9-F610-9578-11EE98D75774}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

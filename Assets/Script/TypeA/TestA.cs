@@ -1,9 +1,13 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TestA : MonoBehaviour
 {
+
+}
+
+/*
     public GameObject joint;
     private Rigidbody RB;
     private ConfigurableJoint T2;
