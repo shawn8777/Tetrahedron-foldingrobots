@@ -102,7 +102,7 @@ public partial class TypeB : MonoBehaviour
         o.transform.position = OPoint[0];
         O[0] = o.transform;
         o.AddComponent<Rigidbody>();
-       // o.GetComponent<Rigidbody>().isKinematic = true;
+        //o.GetComponent<Rigidbody>().isKinematic = true;
        // o.GetComponent<Rigidbody>().mass = 10;
         o.GetComponent<Rigidbody>().angularDrag = AngulardrugI;
         o.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
@@ -125,65 +125,74 @@ public partial class TypeB : MonoBehaviour
 
             //set A
             var a = Instantiate(T1Prefab, transform);
+            T1[i] = a.transform;
             a.transform.position = OPoint[0];
             a.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
             a.AddComponent<Rigidbody>();
             a.AddComponent<MeshCollider>();
             a.GetComponent<MeshCollider>().sharedMesh = Mesha;
             a.AddComponent<MeshFilter>().sharedMesh = Mesha;
-            T1[i] = a.transform;
-            FJt[i+3 ] = a.gameObject.AddComponent<FixedJoint>();
-            FJt[i+3 ].connectedBody = oa.GetComponent<Rigidbody>();
-            //rotate T1
-            CJt[i] = oa.AddComponent<ConfigurableJoint>();
-            CJt[i].connectedBody = a.GetComponent<Rigidbody>();
-            CJt[i].anchor = new Vector3(2.45f, 7.4f, 0);
-            CJt[i].axis = new Vector3(-0.11f, 0, 1);
-            CJt[i].xMotion = ConfigurableJointMotion.Locked;
-            CJt[i].yMotion = ConfigurableJointMotion.Locked;
-            CJt[i].zMotion = ConfigurableJointMotion.Locked;
-            CJt[i].angularXMotion = ConfigurableJointMotion.Locked;
-            CJt[i].angularYMotion = ConfigurableJointMotion.Limited;
-            CJt[i].angularZMotion = ConfigurableJointMotion.Locked;
-            SoftJointLimit Angy = CJt[i].GetComponent<ConfigurableJoint>().angularYLimit;
-            Angy.limit = 30;
-            CJt[i].GetComponent<ConfigurableJoint>().angularYLimit = Angy;
+            FJt[i + 3] = a.AddComponent<FixedJoint>();
+            FJt[i + 3].connectedBody = oa.GetComponent<Rigidbody>();
 
             //set connection part between A and B
             var ab = Instantiate(T2Prefab, transform);
+            T2[i] = ab.transform;
             ab.transform.position = OPoint[0];
             ab.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
             ab.AddComponent<Rigidbody>();
             ab.AddComponent<MeshCollider>();
             ab.GetComponent<MeshCollider>().sharedMesh = Meshb;
             ab.AddComponent<MeshFilter>().sharedMesh = Meshb;
-            T2[i] = ab.transform;
-            FJt[i+3 + 3] = ab.gameObject.AddComponent<FixedJoint>();
-            FJt[i+3 + 3].connectedBody = a.GetComponent<Rigidbody>();
-            
+            // connection between ab and a
+            CJt[i] = a.AddComponent<ConfigurableJoint>();
+            CJt[i].connectedBody = ab.GetComponent<Rigidbody>();
+            CJt[i].anchor = new Vector3(4.45f, 7.4f, 0);
+            CJt[i].axis = new Vector3(0, 1, 0);
+            CJt[i].xMotion = ConfigurableJointMotion.Locked;
+            CJt[i].yMotion = ConfigurableJointMotion.Locked;
+            CJt[i].zMotion = ConfigurableJointMotion.Locked;
+            CJt[i].angularXMotion = ConfigurableJointMotion.Locked;
+            CJt[i].angularYMotion = ConfigurableJointMotion.Locked;
+            CJt[i].angularZMotion = ConfigurableJointMotion.Limited;
+            SoftJointLimit Angz = CJt[i].GetComponent<ConfigurableJoint>().angularZLimit;
+            Angz.limit = 45;
+            CJt[i].GetComponent<ConfigurableJoint>().angularZLimit = Angz;
 
             //set B(HORIZONTAL)
             var b = Instantiate(V4Prefab, transform);
             b.transform.position = OPoint[0];
             b.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
-            b.AddComponent<MeshCollider>();
+            b.AddComponent<MeshCollider>().convex = true;
             b.GetComponent<MeshCollider>().sharedMesh = Meshd;
             V4[i] = b.transform;
             b.AddComponent<Rigidbody>();
-            // ab
-            CJt[i+3] = ab.AddComponent<ConfigurableJoint>();
-            CJt[i+3].connectedBody = b.GetComponent<Rigidbody>();
-            CJt[i+3].anchor = new Vector3(5.4f, 7.4f, 0);
-            CJt[i+3].axis = new Vector3(0, 1, 0);
+            // connection between ab and b
+            CJt[i+3] = b.AddComponent<ConfigurableJoint>();
+            CJt[i+3].connectedBody = ab.GetComponent<Rigidbody>();
+            CJt[i+3].anchor = new Vector3(7f, 7.27f, 0);
+            CJt[i+3].axis = new Vector3(1, 0, 200);
             CJt[i+3].xMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3].yMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3].zMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3].angularXMotion = ConfigurableJointMotion.Locked;
-            CJt[i + 3].angularYMotion = ConfigurableJointMotion.Locked;
-            CJt[i + 3].angularZMotion = ConfigurableJointMotion.Limited;
-            SoftJointLimit Angz = CJt[i+3].GetComponent<ConfigurableJoint>().angularZLimit;
-            Angz.limit = 45;
-            CJt[i+3].GetComponent<ConfigurableJoint>().angularZLimit = Angz;
+            CJt[i + 3].angularYMotion = ConfigurableJointMotion.Limited;
+            CJt[i + 3].angularZMotion = ConfigurableJointMotion.Locked;
+            SoftJointLimitSpring spr = CJt[i + 3].GetComponent<ConfigurableJoint>().angularYZLimitSpring;
+            spr.spring = 20;
+            spr.damper = 90;
+            CJt[i + 3].GetComponent<ConfigurableJoint>().angularYZLimitSpring = spr;
+            //hinge joint 
+            //HJt[i] = b.AddComponent<HingeJoint>();
+            //HJt[i].connectedBody = ab.GetComponent<Rigidbody>();
+            //HJt[i].anchor = new Vector3(7f, 7.3f, 0);
+            //HJt[i].axis = new Vector3(0, 1, 0);
+            //HJt[i].useLimits = true;
+            //JointLimits hgj = HJt[i].GetComponent<HingeJoint>().limits;
+            //hgj.min = -20;
+            //hgj.max = 20;
+            //HJt[i].limits = hgj;
+           
 
             //set C
             var c = Instantiate(V5Prefab, transform);
@@ -194,20 +203,20 @@ public partial class TypeB : MonoBehaviour
             c.GetComponent<MeshCollider>().sharedMesh = Meshe;
             c.AddComponent<MeshFilter>().sharedMesh = Meshe;
             V5[i] = c.transform;
-            CJt[i + 3 + 3] = c.AddComponent<ConfigurableJoint>();
-            CJt[i + 3 + 3].connectedBody = b.GetComponent<Rigidbody>();
-            CJt[i + 3 + 3].anchor = new Vector3(10.79f, 7.4f, 0);
-            CJt[i + 3 + 3].axis = new Vector3(0.08f, 1, 0);
+            CJt[i + 3 + 3] = b.AddComponent<ConfigurableJoint>();
+            CJt[i + 3 + 3].connectedBody = c.GetComponent<Rigidbody>();
+            CJt[i + 3 + 3].anchor = new Vector3(9.8f, 7.4f, 0);
+            CJt[i + 3 + 3].axis = new Vector3(0, 1, 0);
             CJt[i + 3 + 3].xMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3 + 3].yMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3 + 3].zMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3 + 3].angularXMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3 + 3].angularYMotion = ConfigurableJointMotion.Locked;
             CJt[i + 3 + 3].angularZMotion = ConfigurableJointMotion.Limited;
-            SoftJointLimit Angzz = CJt[i + 3].GetComponent<ConfigurableJoint>().angularZLimit;
-            Angzz.limit = 45;
-            CJt[i + 3].GetComponent<ConfigurableJoint>().angularZLimit = Angzz;
-           
+            SoftJointLimit Angzz = CJt[i + 3+3].GetComponent<ConfigurableJoint>().angularZLimit;
+            Angzz.limit = 20;
+            CJt[i + 3+3].GetComponent<ConfigurableJoint>().angularZLimit = Angzz;
+            
             //set d
             var d = Instantiate(T3Prefab, transform);
             d.transform.position = OPoint[0];
@@ -217,31 +226,35 @@ public partial class TypeB : MonoBehaviour
             d.GetComponent<MeshCollider>().sharedMesh = Meshc;
             d.AddComponent<MeshFilter>().sharedMesh = Meshc;
             T3[i] = d.transform;
-            CJt[i + 6 + 3] = a.AddComponent<ConfigurableJoint>();
-            CJt[i+ 6 + 3].connectedBody = d.GetComponent<Rigidbody>();
+            FJt[i + 6] = d.AddComponent<FixedJoint>();
+            FJt[i + 6].connectedBody = a.GetComponent<Rigidbody>();
+          CJt[i + 6 + 3] = a.AddComponent<ConfigurableJoint>();
+            CJt[i+  6 + 3].connectedBody = d.GetComponent<Rigidbody>();
             CJt[i + 6 + 3].anchor = new Vector3(4.45f, 7.4f, 0);
-            CJt[i + 6 + 3].axis = new Vector3(0.5f, 1, 0);
+            CJt[i + 6 + 3].axis = new Vector3(0, 1, 0);
             CJt[i + 6 + 3].xMotion = ConfigurableJointMotion.Locked;
             CJt[i + 6 + 3].yMotion = ConfigurableJointMotion.Locked;
             CJt[i + 6 + 3].zMotion = ConfigurableJointMotion.Locked;
             CJt[i + 6 + 3].angularXMotion = ConfigurableJointMotion.Locked;
             CJt[i + 6 + 3].angularYMotion = ConfigurableJointMotion.Locked;
             CJt[i + 6 + 3].angularZMotion = ConfigurableJointMotion.Limited;
-            SoftJointLimit Angyy = CJt[i + 6+3].GetComponent<ConfigurableJoint>().angularZLimit;
-            Angyy.limit = 0;
-            CJt[i + 6+3].GetComponent<ConfigurableJoint>().angularZLimit = Angyy;
+            SoftJointLimit Angzzz = CJt[i + 6+3].GetComponent<ConfigurableJoint>().angularZLimit;
+            Angzzz.limit = 30;
+            CJt[i + 6+3].GetComponent<ConfigurableJoint>().angularZLimit = Angzzz;
             //set e
             var e = Instantiate(V6Prefab, transform);
             e.transform.position = OPoint[0];
             e.transform.localRotation = Quaternion.Euler(0, i * 120, 0);
             e.AddComponent<Rigidbody>();
-            e.AddComponent<CapsuleCollider>().radius = 0.63f;
-            e.GetComponent<CapsuleCollider>().center = new Vector3(12.4f, 7.4f, 0);
-            e.GetComponent<CapsuleCollider>().height = 22;
+            e.AddComponent<CapsuleCollider>().radius = 0.55f;
+            e.GetComponent<CapsuleCollider>().center = new Vector3(11.4f, 7.4f, 0.05f);
+            e.GetComponent<CapsuleCollider>().height = 20;
+            //e.AddComponent<MeshCollider>().convex = true;
+            //e.GetComponent<MeshCollider>().sharedMesh = Meshf;
             e.AddComponent<MeshFilter>().sharedMesh = Meshf;
             V6[i] = e.transform;
-            FJt[i + 3 + 3] = e.AddComponent<FixedJoint>();
-            FJt[i + 3 + 3].connectedBody = c.GetComponent<Rigidbody>();
+            FJt[i + 6] = e.AddComponent<FixedJoint>();
+            FJt[i + 6].connectedBody = c.GetComponent<Rigidbody>();
            
         }
     }
@@ -249,110 +262,118 @@ public partial class TypeB : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetButtonDown("4ction"))//(Input.GetKeyDown(KeyCode.S))
         {
-            Standup();
+            Standup();//all the legs stand
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-           Standup2();
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            getdown();
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            Rotateforward();
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            Rotateback();
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            LegC();
-        }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            LegA1();
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            LegB1();
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            LegC1();
-        }
-        if (Input.GetKey(KeyCode.Z))
-        {
-           
-        }
-        if (Input.GetKey(KeyCode.X))
-        {
-           
-        }
-        if (Input.GetKey(KeyCode.C))
-        {
-            
-        }
-        if (Input.GetKey(KeyCode.F))
-        {
-            Disconnected();
-        }
-        if (Input.GetKey(KeyCode.G))
-        {
-            Leaving();
+           AddrotateAxis();//rotate axis to move body by using one leg and two axis
         }
         if (Input.GetKey(KeyCode.H))
         {
-            Stable();
+            HoldupLeg();
         }
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetButton("Bction"))//rightarrow(Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Topballconnect();
+            Rotateforward();
         }
-
-        Updatabody();
-
+        if (Input.GetButton("Xction"))//leftarrow(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            Rotateforward2();
+        }
+        if (Input.GetButton("5ction"))//downarrow(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Impluseforward();
+        }
     }
-
-    private void Topballconnect()
+    private void Standup()//three legs support whole body
     {
+        if (AudioS.isPlaying == false)
+        {
+            AudioS.Play();
+        }
+        for (int i =0; i <3; i++)
+        {
+           // V5[i].GetComponent<Rigidbody>().AddTorque(V5[i].transform.forward * -1 * 5000000000, ForceMode.Impulse);
+            V5[i].GetComponent<Rigidbody>().AddForce(V5[i].transform.up*60, ForceMode.Acceleration);
+        }
+    }
+    private void AddrotateAxis()
+    {
+        if (AudioS.isPlaying == false)
+        {
+            AudioS.Play();
+        }
+        //add axis angle for body
+        SoftJointLimit Angy = CJt[0 + 3].GetComponent<ConfigurableJoint>().angularYLimit;
+        Angy.limit = 20;
+        CJt[0 + 3].GetComponent<ConfigurableJoint>().angularYLimit = Angy;
+        SoftJointLimit Angyy = CJt[1 + 3].GetComponent<ConfigurableJoint>().angularYLimit;
+        Angyy.limit = 20;
+        CJt[1 + 3].GetComponent<ConfigurableJoint>().angularYLimit = Angyy;
+    }
+    private void HoldupLeg()
+    {
+        if (AudioS.isPlaying == false)
+        {
+            AudioS.Play();
+        }
         for (int i = 0; i < 3; i++)
         {
-            //FJt[i + 18] = T99[i].gameObject.AddComponent<FixedJoint>();
-            //FJt[i + 18].connectedBody = T99[i + 1].gameObject.GetComponent<Rigidbody>();
+            V5[i].GetComponent<Rigidbody>().AddTorque(V5[i].transform.forward * 5000000000, ForceMode.Acceleration);
         }
-
     }
-    private void Updatabody()
+    private void Rotateforward()//rotate axis to move body
     {
+        if (AudioS.isPlaying == false)
+        {
+            AudioS.Play();
+        }
+        V4[0].GetComponent<Rigidbody>().AddTorque(V4[0].transform.up * 300, ForceMode.Impulse);
+        V4[1].GetComponent<Rigidbody>().AddTorque(V4[1].transform.up * 300*-1, ForceMode.Impulse);
         
-        for (int i = 0; i < 3; i++)
+    }
+    private void Rotateforward2()
+    {
+        if (AudioS.isPlaying == false)
         {
-          
+            AudioS.Play();
         }
-
+        SoftJointLimit Angy = CJt[0 + 3].GetComponent<ConfigurableJoint>().angularYLimit;
+        Angy.limit = 0;
+        CJt[0 + 3].GetComponent<ConfigurableJoint>().angularYLimit = Angy;
+        SoftJointLimit Angyy = CJt[1 + 3].GetComponent<ConfigurableJoint>().angularYLimit;
+        Angyy.limit = 0;
+        CJt[1 + 3].GetComponent<ConfigurableJoint>().angularYLimit = Angyy;
+    }
+    private void Impluseforward()
+    {
+        if (AudioS.isPlaying == false)
+        {
+            AudioS.Play();
+        }
+        //V5[2].GetComponent<Rigidbody>().AddForce(V5[2].transform.up * 60, ForceMode.Acceleration);
+        V6[2].gameObject.GetComponent<Rigidbody>().AddRelativeForce(V6[2].transform.forward * 2, ForceMode.Impulse);
+        //V5[2].gameObject.GetComponent<Rigidbody>().AddRelativeForce(V5[2].transform.forward * 1.2f, ForceMode.Impulse);
     }
 
+    /*
     private void Standup()
     {
-        for (int i = 0; i < 3; i++)
-        {
+       
             if (AudioS.isPlaying == false)
             {
                 AudioS.Play();
             }
-            //V5[0].GetComponent<Rigidbody>().AddTorque(V5[0].transform.forward * 500 * -1, ForceMode.Impulse);
-            //V5[1].GetComponent<Rigidbody>().AddTorque(V5[1].transform.forward * 500 * -1, ForceMode.Impulse);
-            //V5[2].GetComponent<Rigidbody>().AddTorque(V5[0].transform.forward * 500 * -1, ForceMode.Impulse);
-            V5[0].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 2000 * Time.deltaTime, 0);
-            V5[1].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 2000 * Time.deltaTime, 0);
-            V5[2].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 2000 * Time.deltaTime, 0);
+            V5[0].GetComponent<Rigidbody>().AddForce(V5[0].transform.right * 0.4f, ForceMode.Impulse);
+            V5[1].GetComponent<Rigidbody>().AddForce(V5[1].transform.right * 0.4f, ForceMode.Impulse);
+            V5[2].GetComponent<Rigidbody>().AddForce(V5[2].transform.right * 0.4f, ForceMode.Impulse);
+            //V5[0].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 2800 * Time.deltaTime, 0);
+           // V5[1].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 2800 * Time.deltaTime, 0);
+            //V5[2].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 2800 * Time.deltaTime, 0);
 
-        }
+        
         Debug.Log("Stand");
         Debug.Log(Time.deltaTime);
 
@@ -373,12 +394,12 @@ public partial class TypeB : MonoBehaviour
         {
             AudioS.Play();
         }
-        V5[0].GetComponent<Rigidbody>().AddTorque(V5[0].transform.forward * 500, ForceMode.Acceleration);
-        V5[1].GetComponent<Rigidbody>().AddTorque(V5[1].transform.forward * 500, ForceMode.Acceleration);
-        V5[2].GetComponent<Rigidbody>().AddTorque(V5[2].transform.forward * 500, ForceMode.Acceleration);
-        V5[0].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 0, -1 * 4000 * Time.deltaTime);
-        V5[1].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 0, -1 * 4000 * Time.deltaTime);
-        V5[2].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, 0, -1 * 4000 * Time.deltaTime);
+        V5[0].GetComponent<Rigidbody>().AddTorque(V5[0].transform.forward * 50000, ForceMode.Acceleration);
+        V5[1].GetComponent<Rigidbody>().AddTorque(V5[1].transform.forward * 50000, ForceMode.Acceleration);
+        V5[2].GetComponent<Rigidbody>().AddTorque(V5[2].transform.forward * 50000, ForceMode.Acceleration);
+        //V5[0].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, -1 * 4000 * Time.deltaTime,0);
+        //V5[1].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, -1 * 4000 * Time.deltaTime, 0);
+       // V5[2].gameObject.AddComponent<ConstantForce>().relativeForce = new Vector3(0, -1 * 4000 * Time.deltaTime, 0);
     }
     private void Rotateforward()
     {
@@ -386,18 +407,31 @@ public partial class TypeB : MonoBehaviour
         {
           AudioS.Play();
         }
-        T1[0].GetComponent<Rigidbody>().AddTorque(T1[0].transform.up * 20000 * -1, ForceMode.VelocityChange);
-        T1[1].GetComponent<Rigidbody>().AddTorque(T1[0].transform.up * 20000, ForceMode.VelocityChange);
-        
+
+        V4[0].GetComponent<Rigidbody>().AddTorque(V4[0].transform.up * 2000 * -1, ForceMode.VelocityChange);
+        V4[1].GetComponent<Rigidbody>().AddTorque(V4[1].transform.up * 2000, ForceMode.VelocityChange);
+        V5[0].GetComponent<Rigidbody>().AddForce(V5[0].transform.right * 0.5f * -1, ForceMode.Impulse);
+        V5[1].GetComponent<Rigidbody>().AddForce(V5[1].transform.right * 0.5f * -1, ForceMode.Impulse);
+        V5[2].GetComponent<Rigidbody>().AddForce(V5[2].transform.right * 0.5f * -1, ForceMode.Impulse);
+       
     }
     private void Rotateback()
     {
         if (AudioS.isPlaying == false)
         {
             AudioS.Play();
+        }   
+        for (int i = 0; i < 2; i++)
+        {
+            SoftJointLimit Angz = CJt[i + 3].GetComponent<ConfigurableJoint>().angularZLimit;
+            Angz.limit = 0;
+            CJt[i + 3].GetComponent<ConfigurableJoint>().angularZLimit = Angz;
         }
-        T1[0].GetComponent<Rigidbody>().AddTorque(T1[0].transform.up * 20000 , ForceMode.VelocityChange);
-        T1[1].GetComponent<Rigidbody>().AddTorque(T1[1].transform.up * 20000 * -1, ForceMode.VelocityChange);
+        V4[0].GetComponent<Rigidbody>().AddTorque(V4[0].transform.up * 2000, ForceMode.VelocityChange);
+        V4[1].GetComponent<Rigidbody>().AddTorque(V4[1].transform.up * 2000*-1, ForceMode.VelocityChange);
+        V5[0].GetComponent<Rigidbody>().AddForce(V5[0].transform.right * 0.5f * -1, ForceMode.Impulse);
+        V5[1].GetComponent<Rigidbody>().AddForce(V5[1].transform.right * 0.5f * -1, ForceMode.Impulse);
+        V5[2].GetComponent<Rigidbody>().AddForce(V5[2].transform.right * 0.5f * -1, ForceMode.Impulse);
         Debug.Log("ROTATING");
         Debug.Log(Time.deltaTime);
     }
@@ -406,7 +440,15 @@ public partial class TypeB : MonoBehaviour
         if (AudioS.isPlaying == false)
         {
             AudioS.Play();
-        }  
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            //V5[i].GetComponent<Rigidbody>().AddTorque(V5[i].transform.forward * 80000*-1, ForceMode.Impulse);
+        }
+        V5[0].GetComponent<Rigidbody>().AddTorque(V5[0].transform.forward * 5000000000  * -1, ForceMode.Acceleration);
+        V5[1].GetComponent<Rigidbody>().AddTorque(V5[1].transform.forward * 5000000000  * -1, ForceMode.Acceleration);
+        //V5[2].GetComponent<Rigidbody>().AddTorque(V5[2].transform.forward * 500000000 * Time.deltaTime * -1, ForceMode.Acceleration);
+
     }
     private void Back()
     {
@@ -414,10 +456,7 @@ public partial class TypeB : MonoBehaviour
         {
             AudioS.Play();
         }
-        for (int i = 0; i < 3; i++)
-        {
-            
-        }
+        
     }
 
    
@@ -447,7 +486,7 @@ public partial class TypeB : MonoBehaviour
             AudioS.Play();
         }
         
-        T3[0].GetComponent<Rigidbody>().AddTorque(T3[0].transform.forward * 500*Time.deltaTime, ForceMode.Impulse);
+        T3[0].GetComponent<Rigidbody>().AddTorque(T3[0].transform.forward * 500*Time.deltaTime*-1, ForceMode.Impulse);
     }
     private void LegB1()
     {
@@ -456,7 +495,7 @@ public partial class TypeB : MonoBehaviour
             AudioS.Play();
         }
         
-        T3[1].GetComponent<Rigidbody>().AddTorque(T3[1].transform.forward * 500 * Time.deltaTime, ForceMode.Impulse);
+        T3[1].GetComponent<Rigidbody>().AddTorque(T3[1].transform.forward * 500 * Time.deltaTime*-1, ForceMode.Impulse);
     }
     private void LegC1()
     {
@@ -464,8 +503,9 @@ public partial class TypeB : MonoBehaviour
         {
             AudioS.Play();
         }
+        
+        V5[2].GetComponent<Rigidbody>().AddTorque(V5[2].transform.forward * 500000000 * Time.deltaTime*-1, ForceMode.Acceleration);
        
-        T3[2].GetComponent<Rigidbody>().AddTorque(T3[2].transform.forward * 500 * Time.deltaTime, ForceMode.Impulse);
     }
 
     private void Disconnected()
@@ -512,4 +552,5 @@ public partial class TypeB : MonoBehaviour
         }
 
     }
+    */
 }

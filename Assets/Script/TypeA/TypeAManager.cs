@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq.Expressions;
 using System;
 using System.Runtime.InteropServices;
+using UnityEditor;
 
 
 //using TetrahedronA.Unity.Script.sharedMesh;
@@ -528,6 +529,10 @@ public partial class TypeAManager : MonoBehaviour
         {
             Standup();
         }
+        //if (Input.GetAxis("RightHorizontal"))
+        //{
+        //    Standup();
+        //}
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -581,6 +586,11 @@ public partial class TypeAManager : MonoBehaviour
 
         Updatabody();
 
+    }
+
+    private static float NewMethod()
+    {
+        return Input.GetAxis(axisName: "RightHorizontal");
     }
 
     private void Topballconnect()

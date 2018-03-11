@@ -321,6 +321,7 @@
     <Compile Include="Assets\Script\TypeA\ColliderBall.cs" />
     <Compile Include="Assets\Script\TypeA\TestA.cs" />
     <Compile Include="Assets\Script\TypeA\TypeAManager.cs" />
+    <Compile Include="Assets\Script\TypeB\ColliderFly.cs" />
     <Compile Include="Assets\Script\TypeB\TypeB.cs" />
     <Compile Include="Assets\Unity Technologies\Recorder\Extensions\FCIntegration\BaseFCRecorderSettings.cs" />
     <Compile Include="Assets\Unity Technologies\Recorder\Extensions\FCIntegration\EXR\EXRRecorder.cs" />
